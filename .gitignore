@@ -161,9 +161,9 @@ cython_debug/
 #
 
 # Latex stuff
-.fls
-.aux
-.gz
-.out
-.log
-.fdb_latexmk
+*.fls
+*.aux
+*.gz
+*.out
+*.log
+*.fdb_latexmk
