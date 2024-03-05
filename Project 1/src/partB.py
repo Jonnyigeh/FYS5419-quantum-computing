@@ -11,7 +11,7 @@ V12 = 0.2
 V21 = 0.2
 V22 = - V11
 
-def H():
+def H() -> np.ndarray:
     """
     Returns the Hamiltonian matrix for the system.
     """
@@ -20,7 +20,7 @@ def H():
 
     return H0 + H1
 
-def H_pauli(lmbda: float):
+def H_pauli(lmbda: float) -> np.ndarray:
     """
     Returns the Hamiltonian matrix, written using the Pauli matrices
     """
@@ -43,20 +43,23 @@ def H_pauli(lmbda: float):
 if __name__ == "__main__":
     # Initialize the basis
     q0, q1 = init_basis()
-    lmbda = np.linspace(0, 1, 10)
+    lmbda = np.linspace(0, 1, 11)
     eigvals = np.zeros((len(lmbda), 2))
     eigvecs = np.zeros((len(lmbda), 2, 2))
+    # Calculate the eigenvalues and eigenvectors
     for i, l in enumerate(lmbda):
         hamiltonian = H_pauli(l)
         eigvals[i], eigvecs[i] = np.linalg.eigh(hamiltonian)
 
+    
+    # Plot the energy levels and the avoided crossing
     sns.set_theme()
     fig, ax = plt.subplots()
-    ax.plot(lmbda, eigvals[:, 0], label="E1", color="blue", linestyle="--")
-    ax.plot(lmbda, eigvals[:, 1], label="E2", color="red", linestyle="--")
+    ax.plot(lmbda, eigvals[:, 0], label=r"$E_1$", color="blue", linestyle="--")
+    ax.plot(lmbda, eigvals[:, 1], label=r"$E_2$", color="red", linestyle="--")
     ax.scatter(lmbda, eigvals[:, 0], color="blue", marker="x")
     ax.scatter(lmbda, eigvals[:, 1], color="red", marker="x")
-    ax.annotate(r"$\lambda = \frac{2}{3}$", xy=(2/3, 2.3), xytext=(2/3, 3), arrowprops=dict(color="black", arrowstyle="->"), ha="center")
+    ax.annotate(r"$\lambda = \frac{2}{3}$", xy=(2/3, 2.3), xytext=(2/3, 3), arrowprops=dict(color="salmon", arrowstyle="->"), ha="center")
     ax.set_xlabel(r"$\lambda$")
     ax.set_ylabel("Energy")
     ax.set_title("Energy levels as a function of $\lambda$," + "\n" + "highlighting the avoided crossing")

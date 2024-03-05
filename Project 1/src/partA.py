@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def init_basis() -> np.array:
     """
     Set the basis for the qubits, using the two dimensional
-    computational basis |0> = [1,0] and |1> = [0,1].
+    computational basis |0> = [1,0] and |1> = [0,1], i.e the Z-basis.
     """
     q0 = np.array([1, 0])       # |0>
     q1 = np.array([0, 1])       # |1>    
@@ -109,8 +109,8 @@ def bell_measurements(bellstate: np.array, n_measurements:  int) -> np.array:
     Fourth index = |11>
     """
     measurements = np.zeros(n_measurements)
+    prob = np.abs(bellstate)**2
     for i in range(n_measurements):
-        prob = np.abs(bellstate)**2
         measurements[i] = np.random.choice([0, 1, 2, 3], p=prob)    # Picks a random index according to the probability from the Bell state
 
     return measurements
@@ -152,6 +152,7 @@ if __name__ == "__main__":
     # Performing measurements on the Phi+ Bell state
     measurements = bell_measurements(phi_plus, 1000)
     # Plotting the measurements
+    breakpoint()
     plot_bell_measurements(measurements)    
     
 
