@@ -64,4 +64,5 @@ if __name__ == "__main__":
     ax.set_ylabel("Energy")
     ax.set_title("Energy levels as a function of $\lambda$," + "\n" + "highlighting the avoided crossing")
     ax.legend()
+    # fig.savefig('../doc/figs/energy_eigenvalues_onequbit.pdf')
     plt.show()    

@@ -6,6 +6,7 @@ from partA import init_basis, hadamard_gate
 from partB import H_pauli
 from tqdm import tqdm
 
+
 def pauli_x() -> np.ndarray:
     """
     Returns the Pauli-X matrix.
@@ -164,7 +165,7 @@ class VQE():
         """
         return R_y(phi) @ R_x(theta) @ self.q0
     
-
+    
     def optimization_scheme(self, plot: bool=False):
         """
         Optimizes, and minimizes, the energy expectation value using gradient descent 
@@ -219,6 +220,7 @@ class VQE():
             ax.set_xlabel("Iterations")
             ax.set_ylabel("Energy estimate")
             ax.set_title("Energy estimate as a function of iterations")
+            fig.savefig('../doc/figs/energy_est_gradient_descent.pdf')
             plt.show()
 
 
@@ -239,7 +241,8 @@ if __name__ == "__main__":
     ax.scatter(lmba_vals, energies, color="darkorange", marker="x")
     ax.plot(lmba_vals, energies, color="cornflowerblue", linestyle="--")
     ax.set_xlabel(r"$\lambda$")
-    ax.set_ylabel("Energy estimate")
-    plt.show()
+    ax.set_ylabel(r"Energy estimate as a function of $\lambda$")
+    fig.savefig('../doc/figs/energy_eigenvalues_onequbit_VQE.pdf')
+    # plt.show()
     # breakpoint()
     

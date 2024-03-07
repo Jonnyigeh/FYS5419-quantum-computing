@@ -117,7 +117,7 @@ def bell_measurements(bellstate: np.array, n_measurements:  int) -> np.array:
 
 def plot_bell_measurements(measurements: np.array) -> None:
     """
-    Plot the measurements of a Bell state.
+    Plot the measurements of a Bell state. Should add proper annotations.
     """
     fig, ax = plt.subplots()
     ax.hist(measurements, bins=[0, 1, 2, 3, 4], align="left")
@@ -125,6 +125,7 @@ def plot_bell_measurements(measurements: np.array) -> None:
     ax.set_xticklabels([r'$|00\rangle$', r'$|01\rangle$', r'$|10\rangle$', r'$|11\rangle$'])
     ax.set_xlabel('Basis')
     ax.set_ylabel('Counts')
+    # fig.savefig('../doc/figs/bell_measurements.pdf') 
     plt.show()
 
 
@@ -152,7 +153,6 @@ if __name__ == "__main__":
     # Performing measurements on the Phi+ Bell state
     measurements = bell_measurements(phi_plus, 1000)
     # Plotting the measurements
-    breakpoint()
     plot_bell_measurements(measurements)    
     
 
