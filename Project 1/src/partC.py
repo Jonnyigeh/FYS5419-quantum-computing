@@ -64,17 +64,6 @@ def grad_R_z(theta: float) -> np.ndarray:
     """
     return -1/2 * theta * pauli_z() * R_z(theta)
 
-def measure_qubit(qubit: np.ndarray, n_shots: int = 1000) -> np.array:
-    """
-    Measures the qubit in whichever basis it is currently expressed in.
-    """
-    prob = np.abs(qubit) ** 2
-    measurements = np.zeros(n_shots)
-    for i in range(n_shots):
-        measurements[i] = np.random.choice([0, 1], p=prob)
-    
-    return measurements
-
 class VQE():
     def __init__(self, 
                  theta: float = None, 
@@ -112,6 +101,18 @@ class VQE():
         self.q0, self.q1 = init_basis()         # Initialize the basis |0> and |1> in the Z-basis
         self.H = H_pauli(lmbda)                 # Initialize the Hamiltonian matrix (for use with the exact solution)
         
+    def measure_qubit(self, qubit: np.ndarray, n_shots: int = 1000) -> np.array:
+        """
+        Measures the qubit in whichever basis it is currently expressed in.
+        """
+        prob = np.abs(qubit) ** 2
+        measurements = np.zeros(n_shots)
+        for i in range(n_shots):
+            measurements[i] = np.random.choice([0, 1], p=prob)
+        
+        return measurements
+    
+    
     def initialize_algorithm(self):
         """
         Starts the VQE algorithm.
@@ -146,12 +147,13 @@ class VQE():
         omega_z = (V11 - V22) / 2; omega_x = V21
         if ansatz is None:
             ansatz = self.ansatz
-        z_measurements = measure_qubit(ansatz, n_shots)
-        x_measurements = measure_qubit(hadamard_gate(ansatz), n_shots)
+        z_measurements = self.measure_qubit(ansatz, n_shots)
+        x_measurements = self.measure_qubit(hadamard_gate(ansatz), n_shots)
 
         # Calculate the energy expectation value
         z_expectation = (n_shots - 2 * np.sum(z_measurements)) / n_shots
         x_expectation = (n_shots - 2 * np.sum(x_measurements)) / n_shots
+
         I_term = Eps + c * self.lmbda
         Z_term = (Omega + omega_z * self.lmbda) * z_expectation
         X_term = omega_x * self.lmbda * x_expectation
@@ -181,6 +183,7 @@ class VQE():
         tol = 1e-13                                # Convergence threshold
         tmp_energy = np.zeros(self.n_iter)
         tmp_energy[0] = self.energy()
+        breakpoint()
         print("Optimization scheme starting...")
         for i in tqdm(range(1, self.n_iter),
                       colour="green",
@@ -220,7 +223,7 @@ class VQE():
             ax.set_xlabel("Iterations")
             ax.set_ylabel("Energy estimate")
             ax.set_title("Energy estimate as a function of iterations")
-            fig.savefig('../doc/figs/energy_est_gradient_descent.pdf')
+            # fig.savefig('../doc/figs/energy_est_gradient_descent.pdf')
             plt.show()
 
 
@@ -237,12 +240,14 @@ if __name__ == "__main__":
         energies[i] = vqe.gs_energy_estimate
 
     # Visualization of the energy eigenvalues as a function of lambda    
+    sns.set_theme()
     fig, ax = plt.subplots()
-    ax.scatter(lmba_vals, energies, color="darkorange", marker="x")
+    ax.scatter(lmba_vals, energies, color="tomato", marker="x")
     ax.plot(lmba_vals, energies, color="cornflowerblue", linestyle="--")
     ax.set_xlabel(r"$\lambda$")
-    ax.set_ylabel(r"Energy estimate as a function of $\lambda$")
-    fig.savefig('../doc/figs/energy_eigenvalues_onequbit_VQE.pdf')
+    ax.set_ylabel("Energy")
+    ax.set_title(r"Energy estimate of $E_0$ as a function of $\lambda$")
+    # fig.savefig('../doc/figs/energy_eigenvalues_onequbit_VQE.pdf')
     # plt.show()
     # breakpoint()
     
