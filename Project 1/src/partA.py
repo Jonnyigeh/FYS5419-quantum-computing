@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 def init_basis() -> np.array:
     """
@@ -94,10 +95,11 @@ def cnot_gate_bell(bellstate: np.array) -> np.array:
     that qubit 1 is the control qubit and qubit 2 is the target qubit.
     """
     X = np.array([[0, 1], [1, 0]])
-    if (bellstate[2] or bellstate[3]) == 1:        # Checks if control qubit is infact |1>, then applies the pauli x gate
+    if (bellstate[2] or bellstate[3]) != 0:        # Checks if control qubit is infact |1>, then applies the pauli x gate
         new_state = np.kron(np.eye(2), X) @ bellstate
 
         return new_state
+    breakpoint()
     return bellstate
 
 def bell_measurements(bellstate: np.array, n_measurements:  int) -> np.array:
@@ -119,13 +121,16 @@ def plot_bell_measurements(measurements: np.array) -> None:
     """
     Plot the measurements of a Bell state. Should add proper annotations.
     """
+    sns.set_theme(style="darkgrid")
     fig, ax = plt.subplots()
-    ax.hist(measurements, bins=[0, 1, 2, 3, 4], align="left")
+    ax.hist(measurements, bins=[0, 1, 2, 3, 4], align="left", )
     ax.set_xticks([0, 1, 2, 3])
     ax.set_xticklabels([r'$|00\rangle$', r'$|01\rangle$', r'$|10\rangle$', r'$|11\rangle$'])
     ax.set_xlabel('Basis')
     ax.set_ylabel('Counts')
-    # fig.savefig('../doc/figs/bell_measurements.pdf') 
+    ax.set_ylim(0, 500)
+    ax.set_title(r"Bell measurements of $H(\Phi^+)$")
+    # fig.savefig('../doc/figs/hadamard_bell_measurements.pdf') 
     plt.show()
 
 
@@ -149,10 +154,14 @@ if __name__ == "__main__":
     phi_plus, phi_minus, psi_plus, psi_minus = bell_states()
     # Applying the Hadamard and CNOT gates to the Phi+ Bell state
     H_phi_plus = hadamard_gate_bell(phi_plus)
-    cnot_phiplus = cnot_gate_bell(phi_plus)
+    # cnot_phiplus = cnot_gate_bell(phi_plus)
     # Performing measurements on the Phi+ Bell state
     measurements = bell_measurements(phi_plus, 1000)
+    h_measurements = bell_measurements(H_phi_plus, 1000)
+    # ch_measurements = bell_measurements(cnot_phiplus, 1000)
     # Plotting the measurements
-    plot_bell_measurements(measurements)    
+    # plot_bell_measurements(measurements)
+    plot_bell_measurements(h_measurements)
+    
     
 

@@ -117,6 +117,7 @@ class VQE():
         """
         Starts the VQE algorithm.
         """
+        print(f"VQE algorithm initialized for lambda = {self.lmbda:.1f}")
         self.initialize_ansatz()                # Initialize the ansatz wavefunction
         self.optimization_scheme()              # Run the optimization scheme
 
@@ -183,7 +184,7 @@ class VQE():
         tol = 1e-13                                # Convergence threshold
         tmp_energy = np.zeros(self.n_iter)
         tmp_energy[0] = self.energy()
-        breakpoint()
+        
         print("Optimization scheme starting...")
         for i in tqdm(range(1, self.n_iter),
                       colour="green",

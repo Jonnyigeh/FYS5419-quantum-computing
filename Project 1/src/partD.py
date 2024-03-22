@@ -44,7 +44,7 @@ def density_matrix(eigvecs: np.ndarray) -> np.ndarray:
     This assumes the eigvecs are ordered in ascending order of eigenvalues.
     """
 
-    return np.outer(eigvecs.T[0], eigvecs.T[0])
+    return np.outer(eigvecs.T[0].conj(), eigvecs.T[0])
 
 if __name__ == "__main__":
     # Initialize the basis
@@ -68,6 +68,7 @@ if __name__ == "__main__":
         l_b = np.linalg.eigvalsh(den_b[i])
         von_neumann_entropies[i] = -np.sum(l_b * np.log2(l_b))
         eigenvalue_dict[l] = eigvals[i][0]
+        breakpoint()
         
     import json
     # Writes the eigenvalues to a json file for benchmarking in the VQE alg.
