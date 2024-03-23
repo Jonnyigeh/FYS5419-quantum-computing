@@ -2,7 +2,7 @@
 
 The projects task can be found at in doc/Project1.pdf. 
 
-In this project we've successfully implemented the most basic concecpts in quantum computing, the computational basis and various single- and two-qubit gates. We've used this basis, and these gates - together with clever Pauli encoding, to solve for the ground state energies in various Hamiltonian systems using the VQE algorithm. We've followed closely an article from Physics Review C volume 106, \url{https://link.aps.org/doi/10.1103/PhysRevC.106.024319} - where they study the Lipkin model, and provides both the Pauli encoding, as well as the proper ansatz to use in their encoding schemes. 
+In this project we've successfully implemented the most basic concecpts in quantum computing, the computational basis and various single- and two-qubit gates. We've used this basis, and these gates - together with clever Pauli encoding, to solve for the ground state energies in various Hamiltonian systems using the VQE algorithm. We've followed closely an article from Physics Review C volume 106, https://link.aps.org/doi/10.1103/PhysRevC.106.024319 - where they study the Lipkin model, and provides both the Pauli encoding, as well as the proper ansatz to use in their encoding schemes. 
 
 ## Source code
 The structure of our code is built taskwise, and we've made use of inheritance (to some degree) to build the VQE classes for the various subtasks. 
