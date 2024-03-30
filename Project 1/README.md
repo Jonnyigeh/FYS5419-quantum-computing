@@ -1,4 +1,4 @@
-# GitHub Repository folder for the first project in the spring course FYS5419: Quantum Computing and Machine Learning
+# Project 1 in the spring course FYS5419: Quantum Computing and Machine Learning
 
 The projects task can be found at in doc/Project1.pdf. 
 
